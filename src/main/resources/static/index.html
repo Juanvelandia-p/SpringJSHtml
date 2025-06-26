@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+    <html>
+        <head>
+            <title>TODO supply a title</title>
+            <meta charset="UTF-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        </head>
+        <body>
+            <div><a href="/hello">Greetings</a></div>
+            <div><a href="/status">Server status</a></div>
+                <form id="helloForm">
+                <label for="name">Nombre:</label>
+                <input type="text" id="name" name="name" value="Catalina">
+                <button type="submit">Enviar</button>
+            </form>
+            <div id="response"></div>
+            <script>
+                document.getElementById('helloForm').addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    const name = document.getElementById('name').value;
+                    fetch('/hello', {
+                        method: 'POST',
+                        headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+                        body: 'name=' + encodeURIComponent(name)
+                    })
+                    .then(response => response.text())
+                    .then(data => {
+                        document.getElementById('response').innerText = data;
+                    });
+                });
+            </script>
+        </body>
+</html>
